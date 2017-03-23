@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="Generator" content="EditPlus®">
+  <meta name="Author" content="">
+  <meta name="Keywords" content="">
+  <meta name="Description" content="">
+  <title>Document</title>
+  <script type="text/javascript">
+  window.onload=function(){
+	 function foo(){};
+	 var b = new foo();
+	 var a = new foo();
+	 var str="";
+	 if(b._proto_===foo.prototype)
+		str = str+"true ";
+	 console.log(a===b);//false
+	 console.log(a._proto_===b._proto);//ture
+	 console.log(b._proto_===foo.prototype)//false
+	 console.log(a.constructor===foo);//true
+	 console.log(foo.prototype.constructor===foo);//true
+	 console.log(foo.prototype.__proto__===Object.prototype);//true
+	 console.log(foo.prototype.__proto__)//Object;
+	 console.log(foo.prototype.constructor);//foo
+	 console.log(Function.prototype.__proto__===Object.prototype);//ture
+	 console.log(foo.constructor===Function)//true
+	 console.log(Object.constructor===Function)//true
+	 console.log(Function.prototype.constructor===Function)//true
+
+	 
+
+  }
+  </script>
+ </head>
+ <body>
+	
+ </body>
+</html>
