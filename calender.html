@@ -1,0 +1,89 @@
+﻿<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>闭包经典题型</title>
+	</head>
+
+	<style type="text/css">
+	body,html{padding: 0;margin: 0;font-size: 14px;color:#000;}
+	table {border-collapse: collapse;width: 100%;table-layout: fixed;}
+	td,th {border: 1px solid #e1e1e1;padding: 0;height: 20px;line-height: 20px;text-align: center;}
+	.current{color:red;}
+	</style>
+	<body>
+	<table>
+    <thead>
+        <tr><th>一</th><th>二</th><th>三</th><th>四</th><th>五</th><th>六</th><th>日</th></tr>
+    </thead>
+    <tbody>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+        <tr><td></td><td></td><td></td><td></td><td></td><td></td><td></td></tr>
+    </tbody>
+</table>
+	</body>	
+	
+	<script type="text/javascript">
+	var flag=false;
+	var currenday; 
+	var limt;
+	function calendar(year, month) {
+		var current = new Date();
+		var str = year+"/"+month+"/"+1;
+		var str2 = year+"/"+(month+1)+"/"+0;
+		var date = new Date(Date.parse(str));
+		console.log(date);
+		if(current.getFullYear()==date.getFullYear()&&current.getMonth()==date.getMonth())
+		{
+			flag=true;
+			currenday=current.getDate();
+		}	
+		var day = new Date(year,month,0);
+		limt = day.getDate();
+		console.log(limt);
+		drawcalendar(date.getDay());
+		
+	}
+    function drawcalendar(day)
+	{
+		var tbody = document.getElementsByTagName("tbody");
+		var tr = tbody[0].children;
+		var index =1;
+		
+		for(var i=0;i<tr.length;i++)
+		{
+			var td = tr[i].children;
+			for(var j=0;j<td.length;j++)
+			{
+				td[j].innerHTML="";
+				
+				if(i==0)
+				{
+					if(j<day-1)
+						continue;
+				}
+				if(index<=limt)
+				
+				{var p = document.createElement("p");
+				var text =  document.createTextNode(index);
+				if(flag==true&&index==currenday)
+					p.className = "current";
+				p.appendChild(text);
+				td[j].appendChild(p);
+				index++;
+				}
+			}
+			
+			
+		}
+		console.log(tr);
+	}
+	
+	calendar(2017,3)
+	</script>
+	
+</html>
