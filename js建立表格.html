@@ -1,0 +1,35 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>鼠标事件（跟随鼠标移动）</title>
+    <style type="text/css">
+		
+    </style>
+    <script type="text/javascript">
+		window.onload = function(){
+			var table = document.createElement("table");
+			table.border = 1;
+			table.width = "100%";
+			var tHead = table.createTHead();
+			tHead.appendChild(document.createTextNode("我是表头"));
+			var tbody = document.createElement("tbody");
+			table.appendChild(tbody);
+			for(var i = 0 ;i<5;i++)
+			{
+				tbody.insertRow(i);
+				for(var j = 0 ;j<5;j++)
+				{
+					tbody.rows[i].insertCell(j);
+					tbody.rows[i].cells[j].appendChild(document.createTextNode("("+i+","+j+")"));
+				}
+			}
+			document.body.appendChild(table);
+		}
+		
+    </script>
+</head>
+<body>
+	
+</body>
+</html>

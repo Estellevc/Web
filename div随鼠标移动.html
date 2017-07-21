@@ -1,0 +1,52 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>鼠标事件（跟随鼠标移动）</title>
+    <style type="text/css">
+		#box{width:500px;height:500px;border:1px solid;}
+        #floatbox {width:50px;height:50px;position:absolute;left:0px; top:0px;background-color:red;
+        }
+        #floatbox img {width:50px;height:50px;
+            }
+    </style>
+    <script type="text/javascript">
+        window.onload = function () {
+			var fl = {
+				floatdiv:document.getElementById("floatbox"),
+				wrap:document.getElementById("box"),
+				
+				init:function(){
+					var that = this;
+					this.wrap.onmousemove = function(e){
+						var oEvent = e || event;
+						var pos = that.getpos(oEvent);
+						that.floatdiv.style.left = pos.x + "px";
+						that.floatdiv.style.top = pos.y + "px";
+					};
+					this.wrap.onmouseout = function(e){
+			
+						that.floatdiv.style.left = 0 + "px";
+						that.floatdiv.style.top = 0 + "px";
+					}
+				},
+				getpos:function(eve){
+					var scrollTop = document.documentElement.scrollTop || document.body.scrollTop;
+					var scrollLeft = document.documentElement.scrollLeft || document.body.scrollLeft;
+					//console.log(document.documentElement.scrollTop)
+					//console.log( document.documentElement.scrollLeft)
+					return {x : scrollLeft + eve.clientX+5,y : scrollTop + eve.clientY+5 };
+				}
+			};
+           fl.init();
+        };
+    </script>
+</head>
+<body>
+	<div id="box">
+	</div>
+    <div id="floatbox">
+        
+	</div>
+</body>
+</html>

@@ -1,0 +1,75 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <title>鼠标事件（跟随鼠标移动）</title>
+    <style type="text/css">
+		
+    </style>
+    <script type="text/javascript">
+		window.onload = function(){
+			// window.print();
+			window.find();
+			var newwin = window.open("http://www.baidu.com","wroxWindex","height=400,width=400,top=10,left=20,resizable=yes");
+			var inter = null;
+			var date = new Date();
+			var i = 0 ;
+			document.getElementById("box").innerHTML = date.toString();
+			function f(){
+				i++;
+				document.getElementById("box").innerHTML = new Date().toString();
+				if(i==10)
+				{
+					newwin.close();
+					
+					document.getElementById("box").innerHTML = "时间到，窗口关闭";
+					clearInterval(inter);
+				}
+				
+			}
+			inter = setInterval(f,1000);
+			var leftPos = (typeof window.screenLeft == "number") ? window.screenLeft : window.screenX;
+			//console.log(leftPos)
+			var topPos = (typeof window.screentTop == "number") ? window.screenTop : window.screenY;
+			//console.log(leftPos)
+			var obj = {
+				hash:location.hash,
+				host:location.host,
+				hostname:location.hostname,
+				href:location.href,
+				pathname:location.pathname,
+				port:location.port,
+				protocol:location.protocol
+			};
+			console.log(obj)
+			//查询字符串参数拆分
+			function getQueryStringArgs(url){
+				var args = {};
+				
+				var items = (url.length > 0) ? url.split("&"):[];
+				
+				var item = null,name = null,value = null;
+				for(var i=0;i<items.length;i++)
+				{
+					item = items[i].split("=");
+					//console.log(item);
+					name = item[0];
+					value = item[1];
+					args[name] = value;
+					//console.log(args);
+					
+				}
+				return args;
+			}
+			console.log(getQueryStringArgs("p=1&id=2&page=5&name=estelle"));
+			//location.href="http://www.baidu.com";
+			console.log(navigator.plugins)
+			
+		}
+		
+    </script>
+</head>
+<body>
+	<div id="box"></div>
+</body>
+</html>

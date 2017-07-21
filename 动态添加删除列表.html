@@ -1,0 +1,108 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style type="text/css">
+	
+	</style>
+</head>
+<body>
+	<ul id="box">
+		
+	</ul>
+	<p>
+		<input type="text" name ="id"/ id="id">
+		<input type="text" name="name" id="name"/>
+		<input type="button" value="添加" id="btn"/>
+	</p>
+	<p><input type="text" placeholder="输入要查询的id" id="keyword"/>
+		<input type="button" value="查询" id="btn2"/>
+	</p>
+</body>
+<script type="text/javascript">
+window.onload = function(){
+	function F(id,name){
+		this.id = id;
+		this.name = name;
+	}
+	var ul_list = {
+		ul:document.getElementById("box"),
+		data:[],
+		key:null,
+		init:function(){
+			this.data.push(new F(1,"aa"));
+			this.do_bulid();
+			this.do_add();
+			this.do_delete();
+			this.do_select();
+		},
+		do_add:function(){
+			var that = this;
+			document.getElementById("btn").addEventListener('click',function(){
+				
+				var id = document.getElementById("id").value;
+				var name = document.getElementById("name").value;
+				console.log(name)
+				var obj = new F(id,name);
+				that.data.push(obj);
+				that.do_bulid();
+			});
+		},
+		do_select:function(){
+			var that = this;
+			document.getElementById("btn2").addEventListener('click',function(){
+
+				var id = document.getElementById("keyword").value;
+				if(id!=null)
+				{
+					that.key = parseInt(id);
+					that.do_bulid();
+				}
+				4
+					
+			});
+		},
+		do_bulid:function(){
+			this.ul.innerHTML = "";
+			for(var i=0;i<this.data.length;i++)
+			{
+				var li = document.createElement("li");
+				var str = "";
+				var temp = this.data[i];
+				for(var v in temp)
+				{
+					str = str + v +":"+temp[v]+"\t";
+				}
+				
+				var text = document.createTextNode(str);
+				var btn = document.createElement("input");
+				btn.type = "button";
+				btn.value = "删除";
+				if(temp["id"] == this.key)
+					li.style.backgroundColor = "red";
+				li.appendChild(text);
+				li.appendChild(btn);
+				li.index = i;
+				this.ul.appendChild(li);
+			}
+		},
+		
+		do_delete:function(){
+			var that = this
+			this.ul.addEventListener('click',function(e){
+				
+				var target = e.target.parentNode;
+				console.log(target.index);
+				that.data.splice(target.index,1);
+				that.do_bulid();
+					
+			},false)
+		}
+
+	}
+
+	ul_list.init();
+}
+</script>
+</html>
