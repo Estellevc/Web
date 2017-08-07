@@ -1,0 +1,179 @@
+
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <title></title>
+   
+ 
+  <style type="text/css">
+  	ul{margin:0;padding: 0;}
+  	.main{width:213px;height:320px;border:1px solid;}
+  	.screen_area input{width:200px;height: 50px;border: 1px solid;margin: 5px 5px;}
+  	.keybord_area{margin: 0 auto;width:200px;}
+  	.row{width:200px;height:50px;}
+  	.row li{float:left;text-decoration: none;list-style: none;}
+  	.row li button{width:50px;height: 50px;}
+  	.orange{background: orange;}
+  </style>
+</head>
+<body>
+	<div ng-app="myApp" class="main">
+		<div class="screen_area">
+			<input type="text"  id="screen" value="" />
+		</div>
+		<div class="keybord_area">
+			<div class="row">
+				<ul>
+					<li><button value="c">c</button></li>
+					<li><button value="+/-">+/-</button></li>
+					<li><button value="%">%</button></li>
+					<li><button value="/" class="orange">/</button></li>
+				</ul>
+			</div>
+			<div class="row">
+				<ul>
+					<li><button value="7">7</button></li>
+					<li><button value="8">8</button></li>
+					<li><button value="9">9</button></li>
+					<li><button value="x" class="orange">x</button></li>
+				</ul>
+			</div>
+			<div class="row">
+				<ul>
+					<li><button value="4">4</button></li>
+					<li><button value="5">5</button></li>
+					<li><button value="6">6</button></li>
+					<li><button value="-" class="orange">-</button></li>
+				</ul>
+			</div>
+			<div class="row">
+				<ul>
+					<li><button value="1">1</button></li>
+					<li><button value="2">2</button></li>
+					<li><button value="3">3</button></li>
+					<li><button value="+" class="orange">+</button></li>
+				</ul>
+			</div>
+			<div class="row">
+				<ul>
+					<li style="width:100px;"><button value="c" style="width:100px;">0</button></li>
+					
+					<li><button value=".">.</button></li>
+					<li><button value="=" class="orange">=</button></li>
+				</ul>
+			</div>
+		</div>
+  	</div>
+  <script type="text/javascript">
+    
+ 	var caculator = {
+ 		screen:document.getElementById("screen"),
+ 		buf:[],
+ 		arg1:0,
+ 		arg2:0,
+ 		op:'',
+ 		count:0,
+ 		init :function(){
+ 			screen.value="aaa";
+ 			var rows = document.getElementsByClassName("row");
+ 			for(var i =0 ;i<rows.length;i++)
+ 			{
+ 				var that = this;
+ 				rows[i].addEventListener("click",function(event){
+ 					//console.log(that);
+ 					
+ 					var temp = event.target.value;
+ 					that.screen.value = that.screen.value+temp;
+ 					var reg1 = /[0-9]|\./;
+ 					if(reg1.test(temp))
+ 					{
+ 						that.buf[that.count] = event.target.value;
+ 						that.count++;
+ 						console.log(that.buf);
+ 						return;
+ 					}
+ 					var reg2 = /[\+|\-|\x|\/|%]/;
+ 					if(reg2.test(temp))
+ 					{
+ 						
+ 						that.arg1 = that.buf.slice(0,that.count).join('');
+ 						that.op = temp;
+ 						that.buf = [];
+ 						that.count=0;
+ 						console.log("arg1："+that.arg1);
+ 						return;
+ 					}
+ 					if(temp == "=")
+ 					{
+ 						that.arg2 = that.buf.slice(0,that.count).join('');
+ 						console.log(that.arg1+" "+that.op+" "+that.arg2);
+ 						var result = that.getResult(that.arg1,that.arg2,that.op);
+ 						that.screen.value = result;
+ 						that.buf = result.toString().split("");
+ 						that.count = that.buf.length;
+ 						console.log(result);
+ 						console.log(that.buf);
+ 						return;
+ 					}
+ 					if(temp == "c")
+ 						that.clear(that);
+ 					
+ 					
+ 				});
+ 			}
+ 			
+ 		},
+ 		clear:function(obj)
+ 		{
+ 			obj.screen.value="";
+ 			obj.buf = [];
+ 			obj.arg1 = 0;
+ 			obj.arg2 = 0;
+ 			obj.op = '';
+
+ 		},
+ 		getNums:function(arg){
+ 			var num = parseFloat(arg);
+ 			return num?num:alert("出错");
+ 		},
+ 		getResult:function(arg1,arg2,op){
+ 			if(typeof op=='string')
+ 			{
+ 				switch(op)
+ 				{
+ 					case "+":
+ 						var n1 = this.getNums(arg1);
+ 						var n2 = this.getNums(arg2);
+ 						var result = n1 + n2;
+ 						return result;
+ 					case"-":
+						var n1 = this.getNums(arg1);
+ 						var n2 = this.getNums(arg2);
+ 						var result = n1 - n2;
+ 						return result;
+ 					case"/":
+						var n1 = this.getNums(arg1);
+ 						var n2 = this.getNums(arg2);
+ 						var result = n1 / n2;
+ 						return result;
+ 					case"x":
+						var n1 = this.getNums(arg1);
+ 						var n2 = this.getNums(arg2);
+ 						var result = n1 * n2;
+ 						return result;
+ 					case"%":
+						var n1 = this.getNums(arg1);
+ 						var n2 = this.getNums(arg2);
+ 						var result = n1 % n2;
+ 						return result;
+ 					
+ 				}
+ 			}
+ 		}
+
+ 	}
+ 	caculator.init();
+  </script>
+</body>
+</html>
